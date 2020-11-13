@@ -4,17 +4,13 @@ const mongoose = require("mongoose");
 const path = require("path");
 const Characters = require("./models/Characters");
 const axios = require("axios");
-// const routes = require("./routes");
 
 const PORT = process.env.PORT || 5000;
 
 const app = express();
 
-// const authController = require("./controllers/authController");
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// app.use(authController);
 
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/spellbook-characters-db",
@@ -59,7 +55,6 @@ app.get("/", async (req, res) => {
 
 app.get("/chars", async (req, res) => {
   const name = await Characters.find();
-  //   console.log((name))
   res.json({ name });
 });
 
@@ -71,11 +66,9 @@ app.get("/classNames", async (req, res) => {
     );
     return item.data;
   });
-  Promise.all(CharacterClasses).then((results)=>{
-      res.json({results})
-  })
-  //   console.log(await CharacterClasses)
-  //   res.json({ CharacterClasses });
+  Promise.all(CharacterClasses).then((results) => {
+    res.json({ results });
+  });
 });
 
 app.listen(PORT, () => {
